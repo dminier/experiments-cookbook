@@ -41,7 +41,7 @@ def update_vad():
 with st.sidebar:
     st.button('Start', on_click=start_listening)
     st.button('Stop', on_click=stop_listening)
-    VAD_SENSIBILITY = st.selectbox('VAD Sensibility', (1, 2, 3), on_change=update_vad)
+    VAD_SENSIBILITY = st.selectbox('VAD Sensibility', (0, 1, 2, 3), on_change=update_vad)
     NUM_PADDING_CHUNKS = st.number_input('Insert number of padding chunks', value=10)
     NUM_WINDOW_CHUNKS = st.number_input('Insert number of chunks in the windows', value=300)
     MINIMAL_SPEECH_IN_SECOND = st.number_input('Minimal audio duration before sens', value=0.5)
