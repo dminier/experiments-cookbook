@@ -2,4 +2,4 @@
 
 Experiments on open source LLM.
 
-Here, Streaming speech 2 text with wisper on triton.
+Streaming speech 2 text with Whisper + Triton using https://github.com/dminier/whisper-triton-api
