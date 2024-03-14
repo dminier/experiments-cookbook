@@ -6,6 +6,7 @@ import aiohttp
 import pyaudio
 import streamlit as st
 import webrtcvad
+from aiohttp import ClientConnectorError
 from loguru import logger
 
 API_WS_URL = os.getenv("API_WS_URL", "ws://localhost:7000")
@@ -120,9 +121,12 @@ async def receive(ws):
 async def send_receive():
     url = f"{API_WS_URL}/ws/speech2text"
     logger.debug(f'Connecting websocket to url {url}')
-    async with aiohttp.ClientSession(trust_env=True) as session:
-        async with session.ws_connect(url) as ws:
-            await asyncio.gather(send(ws), receive(ws))
+    try:
+        async with aiohttp.ClientSession(trust_env=True) as session:
+            async with session.ws_connect(url) as ws:
+                await asyncio.gather(send(ws), receive(ws))
+    except ClientConnectorError:
+        st.error('You should install and run https://github.com/dminier/whisper-triton-api', icon="🚨")
 
 
 asyncio.run(send_receive())
