@@ -1,0 +1,5 @@
+import os
+
+VECTOR_DB_COLLECTION = "MYDATA_COLLECTION"
+QDRANT_URL = os.getenv("QDRANT_URL", "localhost:6334")
+

@@ -7,7 +7,7 @@ from pydub import AudioSegment
 
 
 def main():
-    st.title('🎤 Transcribe Wave')
+    st.title('🎤 Transcribe file')
     prompt = st.text_input("Whisper prompt", value="<|startoftranscript|><|fr|><|transcribe|><|notimestamps|>")
     file = st.file_uploader("Upload an audio file", type=["mp3", "wav"])
 
@@ -22,7 +22,7 @@ def main():
         bytes_data = file.read()
         st.audio(bytes_data, format="audio")
 
-        if st.button("Convert to WAV"):
+        if st.button("Transcribe"):
             wav_bytes = convert(bytes_data)
             audio = AudioSegment.from_wav(io.BytesIO(wav_bytes))
 
