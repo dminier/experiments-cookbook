@@ -11,4 +11,4 @@ def ollama_config(model_name="mistral"):
     return ollama_llm, ollama_llm_embeddings, ollama_chat, ollama_chat_strict
 
 
-llm, llm_embeddings, chat, chat_strict = ollama_config()
+LLM, LLM_EMBEDDINGS, CHAT, CHAT_STRICT = ollama_config()

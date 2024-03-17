@@ -2,14 +2,13 @@ from langchain import LLMChain, PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from loguru import logger
 
-from pages.langchain.llm import llm
+from pages.backend.llm import LLM
 
 
 def get_conversation_memory_chat():
     template = """Tu es l'assistant d'un enfant. 
     C'est une petite fille qui s'appelle Violette.
  
-
     {chat_history}
     {human_input}
     """
@@ -21,7 +20,7 @@ def get_conversation_memory_chat():
     memory = ConversationBufferMemory(memory_key="chat_history")
 
     return LLMChain(
-        llm=llm,
+        llm=LLM,
         prompt=prompt,
         verbose=True,
         memory=memory,

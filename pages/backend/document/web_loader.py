@@ -2,10 +2,10 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from loguru import logger
 
-from pages.langchain.document.loader.vector_insert import process_document
+from pages.backend.document.database import insert_documents_vector
 
 
-def load_documents(url: str):
+def load_web_documents(url: str):
     logger.debug(f"load {url}")
     # todo async
     loader = WebBaseLoader(
@@ -15,4 +15,4 @@ def load_documents(url: str):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     documents = text_splitter.split_documents(data)
 
-    process_document(documents)
+    insert_documents_vector(documents)
