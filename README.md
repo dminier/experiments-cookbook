@@ -1,6 +1,6 @@
 # Description
 
-Experiments on open source LLM.
+Experiments 
 
 ## Whisper
 
