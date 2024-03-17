@@ -1,1 +1,1 @@
-streamlit run app.py
+streamlit run 1-🧪-experiments.py

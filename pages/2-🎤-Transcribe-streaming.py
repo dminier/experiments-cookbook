@@ -45,7 +45,7 @@ with st.sidebar:
     VAD_SENSIBILITY = st.selectbox('VAD Sensibility', (0, 1, 2, 3), on_change=update_vad)
     NUM_PADDING_CHUNKS = st.number_input('Insert number of padding chunks', value=10)
     NUM_WINDOW_CHUNKS = st.number_input('Insert number of chunks in the windows', value=300)
-    MINIMAL_SPEECH_IN_SECOND = st.number_input('Minimal audio duration before sens', value=0.5)
+    MINIMAL_SPEECH_IN_SECOND = st.number_input('Minimal audio duration before sending', value=0.5)
     RECORD_SECONDS = st.number_input('Max record in seconds', value=3.00)
 
 result_container = st.container(height=600, border=2)
