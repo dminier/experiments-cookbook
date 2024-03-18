@@ -1,12 +1,12 @@
 import streamlit as st
 
+from pages.backend import CONVERSATION_CHATBOT
 from pages.ui.chat_ui import ConversationalChatContainer
-from pages.backend.conversational import get_conversation_memory_chat
 
 
 def main():
     st.title("🤖 Simple chatbot")
-    ConversationalChatContainer(get_conversation_memory_chat()).build_ui()
+    ConversationalChatContainer(CONVERSATION_CHATBOT).build_ui()
 
 
 main()

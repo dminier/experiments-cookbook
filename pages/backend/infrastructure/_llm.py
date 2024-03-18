@@ -9,6 +9,3 @@ def ollama_config(model_name="mistral"):
     ollama_chat_strict = ChatOllama(model=model_name, temperature=0)
 
     return ollama_llm, ollama_llm_embeddings, ollama_chat, ollama_chat_strict
-
-
-LLM, LLM_EMBEDDINGS, CHAT, CHAT_STRICT = ollama_config()
