@@ -1,8 +1,10 @@
 import io
 import os
+import time
 
 import requests
 import streamlit as st
+from loguru import logger
 from pydub import AudioSegment
 
 
@@ -36,18 +38,23 @@ def main():
             for i in range(num_chunks):
                 start_time = i * chunk_size_ms
                 end_time = min((i + 1) * chunk_size_ms, total_duration_ms)
-
+                logger.debug(f"start : {start_time} end :: {end_time}")
                 chunk = audio[start_time:end_time]
+
+                # chunk.export(f"dict_{i}.wav")
+
+
                 with io.BytesIO() as wav_chunk:
                     chunk.export(wav_chunk, format="wav")
                     files = {"file": wav_chunk.read()}
+                    try:
+                        response = requests.post(api_http_url, files=files, data={"prompt": prompt})
 
-                try:
-                    response = requests.post(api_http_url, files=files, data={"prompt": prompt})
-                    st.session_state['transcription'] = response.text
-                    result_container.write("".join(st.session_state['transcription']))
-                except Exception as e:
-                    st.error(f"Error occurred: {e}")
+                        st.session_state['transcription'] = response.text
+                        logger.debug(response.text)
+                        result_container.write(st.session_state['transcription'])
+                    except Exception as e:
+                        st.error(f"Error occurred: {e}")
 
 
 def convert(file_bytes) -> bytes:
