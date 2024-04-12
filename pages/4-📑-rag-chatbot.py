@@ -1,21 +1,23 @@
 import streamlit as st
+from langchain.globals import set_debug
 
-from pages.backend.document.database import clean_collection
-from pages.backend.document.web_loader import load_web_documents
+from pages.backend.infrastructure import WEB_LOADER
+from pages.backend.rag import RetrievalAugmentedGenerationChatBot
 from pages.backend.rag.default_prompt import FR, \
     EN
-from pages.backend.rag.rag import build_rag
 from pages.ui.chat_ui import RagChatContainer
+
+set_debug(True)
 
 
 def dataloader_config():
     url = st.text_input("Url",
                         value="https://fr.wikipedia.org/wiki/Gravit%C3%A9_quantique#:~:text=La%20gravit%C3%A9%20quantique%20est%20une,quantique%20et%20la%20relativit%C3%A9%20g%C3%A9n%C3%A9rale.")
     if st.button("Extract web document"):
-        load_web_documents(url)
+        WEB_LOADER.load_documents(url)
         st.write("done")
-    if st.button("Clean collection"):
-        clean_collection()
+    if st.button("Clean Web collection"):
+        WEB_LOADER.recreate()
 
 
 def prompts_config(lang):
@@ -53,12 +55,14 @@ def main():
                 prompts = prompts_config(lang)
     with chat_column:
         st.write('## 🤖 Assistant')
-        llm_chain = build_rag(
-            query_prompt_template=prompts["query_prompt_template"],
-            answer_prompt_template=prompts["answer_prompt_template"],
-            document_prompt_template=prompts["document_prompt_template"],
-        )
-        RagChatContainer(llm_chain).build_ui()
+
+        RagChatContainer(
+            RetrievalAugmentedGenerationChatBot(
+                query_prompt_template=prompts["query_prompt_template"],
+                answer_prompt_template=prompts["answer_prompt_template"],
+                document_prompt_template=prompts["document_prompt_template"],
+            )
+        ).build_ui()
     with st.container():
         st.write('## 🔬 Understanding')
         st.write('### Extracted documents : ')

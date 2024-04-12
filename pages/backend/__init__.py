@@ -1,0 +1,3 @@
+from pages.backend._conversational_bot import get_conversation_memory_chat
+
+CONVERSATION_CHATBOT = get_conversation_memory_chat()

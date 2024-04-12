@@ -3,6 +3,8 @@ from abc import abstractmethod, ABC
 
 import streamlit as st
 
+from pages.backend.rag import RetrievalAugmentedGenerationChatBot
+
 
 class ChatContainer(ABC):
 
@@ -49,12 +51,18 @@ class ConversationalChatContainer(ChatContainer):
 
 
 class RagChatContainer(ChatContainer):
-    def __init__(self, llm_chain):
-        super().__init__(llm_chain)
+    def __init__(self, bot: RetrievalAugmentedGenerationChatBot):
+        self.bot: RetrievalAugmentedGenerationChatBot = bot
+        super().__init__(bot.chain)
 
     def _response_generator(self, prompt):
         resp = self.llm_chain.invoke({"question": prompt})
         answer = resp["answer"]
+        self.bot.memory.save_context(
+            {"question": prompt},
+            {"answer": answer.content}
+        )
+
         for word in answer.content.split():
             yield word + " "
             time.sleep(0.05)

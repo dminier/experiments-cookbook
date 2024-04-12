@@ -27,7 +27,7 @@ A very simple chat bot.
 
 ![conversation-chatbot · Streamlit.png](docs%2Fconversation-chatbot%20%C2%B7%20Streamlit.png)
 ### 4-📑-rag-chatbot.py
-
+(in progress)
 * Rag chat bot with Qdrant VectorStore.
 * Load Web document 
 
