@@ -4,6 +4,7 @@ import time
 
 import requests
 import streamlit as st
+from loguru import logger
 from pydub import AudioSegment
 
 
@@ -21,7 +22,6 @@ def main():
         st.write(file.type)
         bytes_data = file.read()
         st.audio(bytes_data, format="audio")
-
         transcribe_no_timestamp(api_http_url, bytes_data, channel_number)
         transcribe_timestamp(api_http_url, bytes_data, channel_number)
 
@@ -102,6 +102,7 @@ def call(endpoint, file, data):
     rtf = duration / audio_duration
     st.write(f"RTF = {rtf}")
     return transcription
+ 
 
 
 if __name__ == "__main__":
